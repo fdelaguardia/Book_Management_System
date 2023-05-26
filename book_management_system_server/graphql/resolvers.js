@@ -1,6 +1,6 @@
-import { PrismaClient } from "@prisma/client";
-import { jwt } from "jsonwebtoken";
-import bcrypt from "bcrypt";
+const { PrismaClient } = require("@prisma/client");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const prisma = new PrismaClient();
 
@@ -14,32 +14,12 @@ const createToken = (user) => {
     return jwtoken;
 }
 
-const validateToken = (token) => {
-    try {
-        const decrypted = jwt.verify(token, SECRET)
-        return decrypted.userId
-    } catch (err) { return null }
-}
-
-
 const resolvers = {
     Query: {
         book: async ({ id }) => {
             return prisma.book.findUnique({ where: { id } })
         },
-
-        books: async () => {
-            const query = {
-                orderBy: {
-                    title: "asc",
-                }
-            }
-
-            const books = await prisma.book.findMany(query)
-
-            return { books }
-        },
-
+        
         findUser: async (context) => {
             if (!context.token) {
                 return null;
@@ -150,4 +130,4 @@ const resolvers = {
     }
 }
 
-export default resolvers;
+module.exports = resolvers

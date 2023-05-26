@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+const gql = require("graphql-tag");
 
 const typeDefs = gql`
     type User {
@@ -26,15 +26,17 @@ const typeDefs = gql`
 
     type Mutation {
         signup(firstName: String!, lastName: String!, email: String!, password: String!): User
-        login(email: String!, password: String!): {
-            token: String 
-            user: User
-        }
+        login(email: String!, password: String!): AuthPayload
 
         addBook(title: String!, author: String!, publicationYear: Int!): Book!
         editBook(id: ID!, title: String!, publicationYear: Int!): Book!
-        deleteBook(id: Id!): Book!
+        deleteBook(id: ID!): Book!
+    }
+
+    type AuthPayload {
+        token: String 
+        user: User
     }
 `
 
-export default typeDefs;
+module.exports = typeDefs;
