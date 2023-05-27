@@ -5,6 +5,10 @@ import { useState } from 'react';
 
 const NavBar = () => {
 
+    const getToken = () => {
+        return localStorage.getItem("token")
+    }
+
     const [ isDrawerOpen, setIsDrawerOpen ] = useState(false)
 
   return (
@@ -16,24 +20,44 @@ const NavBar = () => {
 
             <h3>Book Management System</h3>
 
-            <Stack>
-                <IconButton size='small' edge='start' color="inherit" 
-                onClick={() => { setIsDrawerOpen(true) }} >
-                      <Avatar sx={{ backgroundColor: 'white', color: 'primary.dark' }} >FD</Avatar>
-                </IconButton>
+            {
+                getToken?
+                <Stack>
+                    <IconButton size='small' edge='start' color="inherit" 
+                    onClick={() => { setIsDrawerOpen(true) }} >
+                        <Avatar sx={{ backgroundColor: 'white', color: 'primary.dark' }} >FD</Avatar>
+                    </IconButton>
 
-                <Drawer anchor='right' open={isDrawerOpen} 
-                onClose={() => {setIsDrawerOpen(false)}} >
-                    <Box p={2} textAlign='left' >
-                          <ButtonGroup variant='text' orientation='vertical' size='large' color='primary' >
-                            <Button>Add Book</Button>
-                            <Button>Favorite Books</Button>
-                            <Button>Currently Reading</Button>
-                            <Button>Logout</Button>
-                        </ButtonGroup>
-                    </Box>
-                </Drawer>
-            </Stack>
+                    <Drawer anchor='right' open={isDrawerOpen} 
+                    onClose={() => {setIsDrawerOpen(false)}} >    
+                        <Box width='200px' p={2} textAlign={'center'} >
+                            <ButtonGroup variant='text' orientation='vertical' size='large' color='primary' >
+                                <Button>Add Book</Button>
+                                <Button>Favorite Books</Button>
+                                <Button>Currently Reading</Button>
+                                <Button>Logout</Button>
+                            </ButtonGroup>
+                        </Box>                   
+                    </Drawer>
+                </Stack>
+                :
+                <Stack direction={'row'} spacing={2} >
+                    <IconButton size='small' edge='start' color="inherit"
+                        onClick={() => { setIsDrawerOpen(true) }} >
+                        <Avatar sx={{ backgroundColor: 'white', color: 'primary.dark' }} ></Avatar>
+                    </IconButton>
+
+                      <Drawer anchor='right' open={isDrawerOpen}
+                      onClose={() => { setIsDrawerOpen(false) }} >
+                            <Box width='200px' p={2} textAlign={'center'} >
+                                <ButtonGroup variant='text' orientation='vertical' size='large' color='primary' >
+                                      <Button sx={{ paddingRight: '70px', paddingLeft: '70px' }} >Log in</Button>
+                                    <Button>Sign up</Button>
+                                </ButtonGroup>
+                            </Box>
+                        </Drawer>
+                </Stack>
+            }
             
         </Toolbar>
     </AppBar>

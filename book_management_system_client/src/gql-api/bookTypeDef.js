@@ -1,5 +1,5 @@
 
-import gql from '@apollo/client'
+import { gql } from 'graphql-tag';
 
 const FIND_BOOK = gql`
     query FindBook($id: ID!){

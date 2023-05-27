@@ -1,7 +1,12 @@
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { Button } from '@mui/material';
 import './App.css';
 
 import NavBar from './components/NavBar';
+
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Singup from './pages/Singup';
 
 function App() {
 
@@ -21,8 +26,24 @@ function App() {
     <div className="App">
 
       <NavBar />
+      <br />
+      <br />
+      <br />
+      <br />
 
-      Welcome to your Book Management System
+      <Routes>
+        <Route path='/' element={<Home />} />
+
+        <Route element={<LoggedIn />} >
+
+        </Route>
+
+        <Route element={<NotLoggedIn />} >
+          <Route path='/signup' element={<Singup />} />
+          <Route path='/login' element={<Login />} />
+        </Route>
+      </Routes>
+
     </div>
   );
 }

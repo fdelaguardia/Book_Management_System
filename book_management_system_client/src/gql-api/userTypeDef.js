@@ -1,5 +1,5 @@
 
-import gql from "@apollo/client"
+import { gql } from 'graphql-tag';
 
 const FIND_USER = gql`
     query FindUser {
@@ -24,7 +24,7 @@ const SIGNUP = gql`
 `
 
 const LOGIN = gql`
-    mutation Login(email: String!, password: String!) {
+    mutation Login($email: String!, $password: String!) {
         login(email: $email, password: $password){
             id
             email

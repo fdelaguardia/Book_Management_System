@@ -9,9 +9,9 @@ const saltRounds = 10
 const SECRET = process.env.SECRET;
 
 const createToken = (user) => {
-    const jwtoken = jwt.sign({ userId: user.id }, SECRET, { expiresIn: '24hr' })
+    const token = jwt.sign({ userId: user.id }, SECRET, { expiresIn: '24hr' })
 
-    return jwtoken;
+    return token;
 }
 
 const resolvers = {
@@ -24,10 +24,10 @@ const resolvers = {
             if (!context.token) {
                 return null;
             }
-            const jwtoken = context.token.replace("Bearer ", "");
+            const token = context.token.replace("Bearer ", "");
 
             try {
-                const decoded = jwt.verify(jwtoken, SECRET);
+                const decoded = jwt.verify(token, SECRET);
 
                 const user = await prisma.user.findUnique({ where: { id: decoded.userId } });
 
@@ -81,9 +81,9 @@ const resolvers = {
                 throw new Error("Invalid email or password. Please try again.")
             }
 
-            const jwtoken = createToken(loginUser)
+            const token = createToken(loginUser)
 
-            return { loginUser, jwtoken }
+            return { loginUser, token }
         },
 
         addBook: async ({ title, author, publicationYear }) => {
