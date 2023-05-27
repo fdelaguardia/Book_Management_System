@@ -1,23 +1,28 @@
-import logo from './logo.svg';
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import './App.css';
 
+import NavBar from './components/NavBar';
+
 function App() {
+
+  const getToken = () => {
+    return localStorage.getItem("authToken")
+  }
+
+  const LoggedIn = () => {
+    return getToken() ? <Outlet /> : <Navigate to={'/'} />
+  }
+
+  const NotLoggedIn = () => {
+    return !getToken() ? <Outlet /> : <Navigate to={'/'} />
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <NavBar />
+
+      Welcome to your Book Management System
     </div>
   );
 }
